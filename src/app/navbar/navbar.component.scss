@@ -1,0 +1,35 @@
+@import "../../styles";
+//@import "../../../node_modules/bootstrap/scss/functions";
+//@import "../../../node_modules/bootstrap/scss/variables";
+
+.navbar {
+  //border-bottom: 1px solid black;
+  box-shadow: 0px -5px 8px;
+}
+.nav-link {
+  color: $dark;
+  font-weight: 500;
+  margin-bottom: 5px;
+  transition-duration: 300ms;
+
+}
+
+//.nav-item .nav-link {
+//
+//}
+
+.nav-link:hover{
+  //color: $light;
+  background-color: rgba(255, 69, 69, 0.1);
+  //border-radius: 50px;
+
+  color: theme-color("primary");
+}
+
+.nav-item.active .nav-link {
+  color: theme-color("primary");
+}
+
+.nav-item.active {
+  border-bottom: 3px solid $primary;
+}
