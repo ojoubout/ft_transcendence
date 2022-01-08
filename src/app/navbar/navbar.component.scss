@@ -6,6 +6,12 @@
   //border-bottom: 1px solid black;
   box-shadow: 0px -5px 8px;
 }
+
+.nav-item {
+  margin-bottom: 3px;
+  transition-duration: 300ms;
+}
+
 .nav-link {
   color: var(--dark);
   font-weight: 500;
@@ -18,12 +24,12 @@
 //
 //}
 
-.nav-link:hover{
+.nav-item:hover:not(.active){
   //color: $light;
   background-color: rgba(255, 69, 69, 0.1);
   //border-radius: 50px;
 
-  color: var(--primary);
+  //color: var(--primary);
 }
 
 .nav-item.active .nav-link {
@@ -31,5 +37,6 @@
 }
 
 .nav-item.active {
+  margin-bottom: 0;
   border-bottom: 3px solid var(--primary);
 }
