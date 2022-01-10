@@ -32,7 +32,7 @@
       <div class="dropdown-menu dropdown-menu-right mt-2" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" [routerLink]="['profile', 'ojoubout']"><i class="bi bi-person-lines-fill pr-2"></i> Profile</a>
         <a class="dropdown-item" routerLink="settings"><i class="bi bi-gear pr-2"></i> Account Settings</a>
-        <a class="dropdown-item" routerLink="logout"><i class="bi bi-box-arrow-left pr-2"></i> Logout</a>
+        <a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-left pr-2"></i> Logout</a>
       </div>
     </div>
   </div>

@@ -9,6 +9,5 @@ import {Router} from "@angular/router";
 export class AppComponent {
   title = 'ft_transcendence';
   constructor(public router: Router) {
-    console.log(router);
   }
 }

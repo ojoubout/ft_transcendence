@@ -3,30 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from './login/login.component';
-import { FortyTwoLogoComponent } from './shared/forty-two-logo/forty-two-logo.component';
-import { LeetLogoComponent } from './shared/leet-logo/leet-logo.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { EmptyComponent } from './empty/empty.component';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import { NotFoundComponent } from './not-found/not-found.component';
+import {LoginModule} from "./login/login.module";
+import {AuthInterceptor} from "./login/auth.interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    FortyTwoLogoComponent,
-    LeetLogoComponent,
     NavbarComponent,
-    EmptyComponent
+    EmptyComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
-    RouterModule,
-    AppRoutingModule
+    LoginModule,
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
