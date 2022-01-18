@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
+import {User} from "../shared/user";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,11 @@ export class OAuthService {
 
   private access_token: string = '';
 
+  // @ts-ignore
+  private _user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
+    console.log('OAuth Service');
     this.access_token = cookieService.get('access_token');
   }
 
@@ -20,12 +26,13 @@ export class OAuthService {
   }
 
   generateAccessToken(code: string) {
-    return this.http.post<{access_token: string}>(environment.apiBaseUrl + 'access_token', code).subscribe({
+    return this.http.post<{access_token: string, user: User}>(environment.apiBaseUrl + 'access_token', code).subscribe({
       next: (token) => {
         console.log(token);
         this.access_token = token.access_token;
         this.cookieService.set('access_token', this.access_token, undefined, '/');
         console.log(this.token);
+        this._user.next(token.user);
       },
       error: (error => console.log(error)),
       complete: () => this.router.navigate([''])
@@ -38,6 +45,10 @@ export class OAuthService {
 
   get token() {
     return this.access_token;
+  }
+
+  get user() {
+    return this._user.value;
   }
 
   logout() {

@@ -1,0 +1,30 @@
+.chat-message {
+  background-color: var(--light);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 18px;
+  padding: 6px;
+  margin: 2px;
+  overflow-wrap: break-word;
+  max-width: 85%;
+}
+
+.img-frame {
+  height: 32px;
+  width: 32px;
+}
+
+.img-frame img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.mine {
+  background-color: var(--primary);
+  color: var(--light);
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+/*# sourceMappingURL=message.component.css.map */

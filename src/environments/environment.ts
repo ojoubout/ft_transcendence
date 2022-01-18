@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:3000/api/v1/'
+  apiBaseUrl: 'http://localhost:3000/api/v1/',
+  chatWebSocketUri: 'ws://localhost:6969'
 };
 
 /*
