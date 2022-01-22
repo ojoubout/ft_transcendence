@@ -3,7 +3,8 @@
 <!-- Header -->
 
   <div id="header" class="row m-0">
-    <h3 id="chat-back" class="bi bi-arrow-left-short mx-1 my-auto rounded-circle"></h3>
+    <h3 id="chat-back" class="bi bi-arrow-left-short mx-1 my-auto rounded-circle"
+    (click)="back()"></h3>
     <img width="32" height="32" class="rounded-circle mr-2 my-auto" alt="Cinque Terre" src="/assets/img.webp">
     <b class="my-auto">Oussama Joubouti</b>
     <h5 id="chat-settings" class="bi bi-gear-fill my-auto ml-auto mr-2"></h5>
@@ -11,19 +12,16 @@
 
 <!-- Messages -->
 
-  <div id="content">
+  <div id="content" #content>
     <div class="container">
-      <app-message></app-message>
-      <app-message></app-message>
-      <app-message [showAvatar]=true></app-message>
-      <app-message [isMine]="true"></app-message>
-      <app-message></app-message>
-      <app-message [showAvatar]=true></app-message>
-      <app-message [isMine]="true"></app-message>
-      <app-message></app-message>
-      <app-message></app-message>
-      <app-message></app-message>
-      <app-message [showAvatar]=true></app-message>
+      <ng-template [ngIf]="messages" *ngFor="let message of messages; let i = index;">
+        <app-date *ngIf="isLateMessage(messages[i - 1], message)" [date]="message.timestamp"></app-date>
+        <app-message
+                     [prev]="messages[i - 1]"
+                     [next]="messages[i + 1]"
+                     [message]="message"
+        ></app-message>
+      </ng-template>
     </div>
   </div>
 

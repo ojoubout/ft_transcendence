@@ -3,11 +3,18 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border-radius: 18px;
   padding: 6px;
-  margin: 2px;
+  margin: 1px;
   overflow-wrap: break-word;
   max-width: 85%;
+}
+
+.border-top {
+  border-top-left-radius: 0;
+}
+
+.border-bottom {
+  border-bottom-left-radius: 0;
 }
 
 .img-frame {

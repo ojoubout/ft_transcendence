@@ -2,8 +2,10 @@
   <div class="dropup" ngbDropdown #dropdown="ngbDropdown" [autoClose]="false">
     <p class="py-2 my-0 px-5" id="dropdownBasic1" ngbDropdownToggle>Friends list (10)</p>
     <div class="w-100 py-0 m-0" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <app-friend-list></app-friend-list>
-<!--      <app-chatting></app-chatting>-->
+      <app-chat-list *ngIf="chatService.currChat === undefined; else chatting"></app-chat-list>
+      <ng-template #chatting>
+        <app-chatting></app-chatting>
+      </ng-template>
     </div>
   </div>
 </div>

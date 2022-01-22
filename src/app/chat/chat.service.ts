@@ -14,8 +14,8 @@ import {BehaviorSubject} from "rxjs";
   providedIn: 'root'
 })
 export class ChatService {
-  private currChat: Chat;
-  private chats: Map<string, Chat> = new Map();
+  public _currChat?: Chat;
+  public chats: Map<string, Chat> = new Map();
   public dropdown: NgbDropdown;
 
   private webSocket: WebSocket;
@@ -64,6 +64,29 @@ export class ChatService {
     }
   }
 
+  loadMessages(chat: Chat) {
+    let obs = this.http.get<Message[]>(`${environment.apiBaseUrl}chat/messages/${chat.roomID}`)
+    obs.subscribe({
+      next: value => {
+        chat.messages = value
+      }
+    });
+    return obs;
+  }
+
+  set currChat(value) {
+    this._currChat = value;
+    this.showChat();
+    // if (value?.messages.length === 0) {
+      // this.loadMessages(value);
+    // }
+  }
+
+  get currChat() {
+    return this._currChat;
+  }
+
+
   isChatExists(user: User) {
     let roomID: string | null = null;
     this.chats.forEach((value, key) => {
@@ -77,12 +100,13 @@ export class ChatService {
     return roomID;
   }
 
-  openChat(roomID: string, user: User) {
+  openChat(roomID: string) {
     let chat = this.chats.get(roomID);
     if (chat === undefined) {
-      this.http.get(`${environment.apiBaseUrl}chat/${roomID}`).subscribe({
+      this.http.get<Chat>(`${environment.apiBaseUrl}chat/${roomID}`).subscribe({
         next: (value) => {
-          this.currChat = value as Chat;
+          this.chats.set(roomID, value);
+          this.currChat = value;
         }
       });
     } else {
@@ -91,16 +115,24 @@ export class ChatService {
   }
 
   sendMessage(message: string) {
-    let m: Message = {
-      roomID: this.currChat.roomID,
-      sender: 'ojoubout',
-      message: message,
-      timestamp: new Date()
-    };
-    this.webSocket.send(JSON.stringify(m));
+    if (this.currChat) {
+      let m: Message = {
+        roomID: this.currChat.roomID,
+        sender: 'ojoubout',
+        message: message,
+        timestamp: new Date()
+      };
+      this.webSocket.send(JSON.stringify(m));
+    } else {
+      console.log('sendMessage(): there is no chat opened');
+    }
   }
 
   receiveMessage(message: MessageEvent) {
     console.log(message);
+  }
+
+  closeChat() {
+    this.currChat = undefined;
   }
 }

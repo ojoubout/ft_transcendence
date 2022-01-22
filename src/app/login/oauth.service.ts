@@ -19,6 +19,9 @@ export class OAuthService {
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
     console.log('OAuth Service');
     this.access_token = cookieService.get('access_token');
+    setTimeout(() => {
+      this.fetchUser();
+    })
   }
 
   getAuthPage() {
@@ -49,6 +52,19 @@ export class OAuthService {
 
   get user() {
     return this._user.value;
+  }
+
+  fetchUser() {
+    console.log('fetchUser');
+    this.http.get<User>(`${environment.apiBaseUrl}users/me`).subscribe({
+      next: value => {
+        console.log(value);
+        this._user.next(value);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 
   logout() {
