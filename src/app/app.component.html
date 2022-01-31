@@ -1,6 +1,5 @@
-<router-outlet *ngIf="router.url.startsWith('/login'); else elseBlock"></router-outlet>
-<ng-template #elseBlock>
-  <app-navbar></app-navbar>
-  <router-outlet></router-outlet>
-</ng-template>
-<app-chat></app-chat>
+<!--<router-outlet *ngIf="router.url.startsWith('/login'); else elseBlock"></router-outlet>-->
+<app-navbar *ngIf="oauthService.isAuthenticated()"></app-navbar>
+<div *ngIf="oauthService.isAuthenticated()" style="padding-top: 51px;"></div>
+<router-outlet></router-outlet>
+<app-chat *ngIf="oauthService.isAuthenticated()"></app-chat>

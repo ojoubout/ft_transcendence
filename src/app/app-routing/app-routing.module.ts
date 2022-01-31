@@ -12,7 +12,7 @@ const routes: Routes = [
     {path: 'play', component: EmptyComponent},
     {path: 'leaderboard', component: EmptyComponent},
     {path: 'chat-rooms', component: EmptyComponent},
-    {path: 'profile/:user', component: EmptyComponent},
+    {path: '', loadChildren: () => import('src/app/profile/profile.module').then(m => m.ProfileModule)},
     {path: 'edit', component: EmptyComponent},
     {path: 'settings', component: EmptyComponent},
     {path: '**', component: NotFoundComponent}
